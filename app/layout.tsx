@@ -1,4 +1,5 @@
 import type React from "react"
+import { AuthProvider } from "@/contexts/auth-context";
 import type { Metadata } from "next"
 import { GeistSans } from "geist/font/sans"
 import { GeistMono } from "geist/font/mono"
@@ -13,15 +14,19 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({
-  children,
-}: Readonly<{
+  children
+}:{
   children: React.ReactNode
-}>) {
+}) {
   return (
-    <html lang="en">
+    <html lang="pt-br">
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable} antialiased`}>
-        <Suspense fallback={null}>{children}</Suspense>
-        <Analytics />
+        <AuthProvider>
+          <Suspense fallback={null}>
+            {children}
+          </Suspense>
+          <Analytics />
+        </AuthProvider>
       </body>
     </html>
   )
